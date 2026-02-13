@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Little Valentine</title>
+
+<style> 
+.secret-img{
+width:120px;
+margin:20px 0;
+border-radius:50%;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
+}
+
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#ffd6e8,#ffeef6,#fff);
+text-align:center;
+overflow-x:hidden;
+padding:40px 20px;
+}
+
+/* ===== SECRET PAGE ===== */
+.secret{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ffc0cb,#ffe6f0);
+}
+
+.secret input{
+padding:12px;
+border-radius:20px;
+border:1px solid pink;
+margin-top:15px;
+}
+
+/* INTRO */
+.intro{
+display:none;
+height:100vh;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ffc0cb,#ffe6f0);
+}
+
+.btn{
+padding:15px 35px;
+border:none;
+border-radius:30px;
+background:#ff6fa5;
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.1);
+}
+
+/* MAIN */
+.main{
+display:none;
+padding:60px 20px;
+}
+
+.card{
+margin:auto;
+max-width:600px;
+padding:30px;
+border-radius:25px;
+background:rgba(255,255,255,0.3);
+backdrop-filter:blur(15px);
+box-shadow:0 8px 32px rgba(0,0,0,0.2);
+}
+
+/* PHOTOS */
+.photo-container{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-top:20px;
+}
+
+.photo-frame{
+border:5px solid gold;
+border-radius:15px;
+padding:5px;
+background:#fff0f5;
+transition:0.3s;
+}
+
+.photo-frame img{
+width:180px;
+height:180px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.photo-frame:hover{
+transform:scale(1.05);
+}
+
+/* ENVELOPE */
+.scene{
+perspective:1200px;
+margin-top:30px;
+}
+
+.envelope{
+width:250px;
+height:160px;
+margin:auto;
+position:relative;
+transform-style:preserve-3d;
+cursor:pointer;
+}
+
+.envelope-body{
+width:100%;
+height:100%;
+background:#ff6fa5;
+border-radius:12px;
+position:absolute;
+}
+
+.envelope-flap{
+position:absolute;
+top:0;
+left:0;
+width:0;
+height:0;
+border-left:125px solid transparent;
+border-right:125px solid transparent;
+border-bottom:90px solid #ff8fb9;
+transform-origin:top;
+transition:0.7s;
+}
+
+.envelope.open .envelope-flap{
+transform:rotateX(180deg);
+}
+
+.letter{
+position:absolute;
+left:15px;
+bottom:10px;
+width:220px;
+background:white;
+padding:18px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+transform:translateY(90px);
+transition:0.7s;
+opacity:0;
+}
+
+.envelope.open .letter{
+transform:translateY(-140px);
+opacity:1;
+}
+
+/* MEMORY */
+.memory{
+margin-top:30px;
+padding:20px;
+background:#ffe0ef;
+border-radius:15px;
+}
+
+/* SECOND PAGE */
+.second-page{
+display:none;
+padding:60px 20px;
+}
+
+.second-img{
+width:90%;
+max-width:450px;
+border-radius:20px;
+box-shadow:0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* MUSIC */
+.music-btn{
+position:fixed;
+top:20px;
+right:20px;
+background:white;
+border-radius:50%;
+width:55px;
+height:55px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+}
+
+/* FLOAT HEARTS */
+.float-heart{
+position:fixed;
+bottom:-50px;
+font-size:20px;
+animation:floatUp 6s linear infinite;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(0);}
+100%{transform:translateY(-110vh);}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SECRET CODE PAGE -->
+<section class="secret" id="secret">
+<h1>Enter Secret Code 💕</h1>
+<img src="ryhab4.jpeg" class="secret-img">
+
+
+<input type="password" id="codeInput" placeholder="Secret code">
+<br>
+
+<button class="btn" onclick="checkCode()">Open</button>
+<p id="error" style="color:red;"></p>
+</section>
+
+<!-- INTRO -->
+<section class="intro" id="intro">
+<h1>My Little Valentine 💖</h1>
+<p>I made something special just for you🤍</p>
+<button class="btn" onclick="openMain()">Open Your Surprise 🎁</button>
+</section>
+
+<!-- MAIN -->
+<section class="main" id="main">
+<div class="card">
+
+<div class="photo-container">
+<div class="photo-frame"><img src="love.jpg.jpg"></div>
+<div class="photo-frame"><img src="ryhab1.jpg"></div>
+<div class="photo-frame"><img src="ryhab2.jpeg"></div>
+</div>
+
+<div class="scene">
+<div class="envelope" onclick="openEnvelope(this)">
+<div class="envelope-body"></div>
+<div class="envelope-flap"></div>
+
+<div class="letter">
+3aywww ryhaab aaaaahm valentine maghadich n3tabro aid lhub 7it bnisba lia kola nhar kan3icho meak rah aid l hub w mtsnitch had nhar bach n3br lik fih ch7al bghik ana men dima kan7awl nwsl lik ahbiba😭🫶🏻 ahhm maelina i loooove u sooo much💕😭 w kanbghik kanbghik kanbghik kanbghi caractère dylk kanbghi ta3amol dylk lkhaaas meaya😭💕 kay3jboni 7nikatk 3winatk 😭💕(kat3jbini nty kamla saraha🌝🫶) idk hat should I say wlkn kanbghik men qalbiy w bzaaaf bzaf w anbqa nbghik nbghik kifma nty kifma atkouni love u 😭💕
+  </div>
+
+</div>
+</div>
+
+<div class="memory">
+<h3>Our Story Began On 💫</h3>
+<p>04 / 07 / 2025</p>
+</div>
+
+<br>
+<button class="btn" onclick="openSecondPage()">Special Page 💕</button>
+
+</div>
+</section>
+
+<!-- SECOND PAGE -->
+<section class="second-page" id="secondPage">
+
+<h1>haki diplom dylk💖</h1>
+<img src="ryhab3.jpeg" class="second-img">
+
+<br><br>
+<button class="btn" onclick="goBack()">Back 🔙</button>
+
+</section>
+
+<!-- MUSIC -->
+<div class="music-btn" onclick="toggleMusic()">🎵</div>
+<audio id="music" src="HIM - Gone With The Sin.mp3"></audio>
+
+<script>
+
+/* SECRET CODE */
+function checkCode(){
+    let code = document.getElementById("codeInput").value;
+
+    if(code === "CASAWIA HBK"){
+        secret.style.display = "none";
+        intro.style.display = "flex";
+
+        // Start music automatically
+        let music = document.getElementById("music");
+        music.play().catch(e => {
+            // catch error ila browser ma khallach autoplay
+            console.log("Autoplay prevented: ", e);
+        });
+
+    } else {
+        document.getElementById("error").innerText = "Wrong code 😢";
+    }
+}
+
+
+
+function openMain(){
+intro.style.display="none";
+main.style.display="block";
+}
+
+function openEnvelope(el){
+el.classList.toggle("open");
+}
+
+function openSecondPage(){
+main.style.display="none";
+secondPage.style.display="block";
+}
+
+function goBack(){
+secondPage.style.display="none";
+main.style.display="block";
+}
+
+/* MUSIC */
+let music=document.getElementById("music");
+let playing=false;
+
+function toggleMusic(){
+if(!playing){
+music.play();
+playing=true;
+}else{
+music.pause();
+playing=false;
+}
+}
+
+/* Floating hearts */
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="float-heart";
+heart.innerHTML="💖";
+heart.style.left=Math.random()*100+"vw";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+},500);
+
+</script>
+
+</body>
+</html>
